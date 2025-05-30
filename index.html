@@ -359,6 +359,59 @@ button:active {
   transform: perspective(170px) rotateX(36deg) translateY(5px);
 }
 
+/* Burger caché en desktop, visible en mobile */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+.nav-toggle span {
+  display: block;
+  width: 2rem;
+  height: 0.25rem;
+  background: var(--main-color);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+/* Réglages pour mobile */
+@media (max-width: 768px) {
+  /* on cache les liens par défaut */
+  .navbar a {
+    display: none;
+    width: 100%;
+    text-align: left;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+  }
+  /* on affiche le burger */
+  .nav-toggle {
+    display: flex;
+    position: absolute;
+    top: 1.2rem;
+    right: 2rem;
+  }
+  /* quand on ajoute .open sur .navbar, on montre les liens */
+  .navbar.open a {
+    display: block;
+  }
+}
+/* Animation du bouton quand actif */
+.nav-toggle.toggle span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-toggle.toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.toggle span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
 
 
 
@@ -459,12 +512,20 @@ button:active {
     </section>
     
 
-    <nav class="navbar">
-        <a href="#about">Qui sommes-nous</a>
-        <a href="#expertise">Expertises</a>
-        <a href="#method">Méthodologie</a>
-        <a href="#contact">Contact</a>
-    </nav>
+<nav class="navbar">
+  <a href="#about">Qui sommes-nous</a>
+  <a href="#expertise">Expertises</a>
+  <a href="#method">Méthodologie</a>
+  <a href="#contact">Contact</a>
+
+  <!-- BOUTON BURGER -->
+  <button class="nav-toggle" aria-label="Ouvrir le menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
     
 
     <section id="about" class="section-centered">
@@ -597,6 +658,16 @@ buttons.forEach(button => {
 });
 
   </script>
-        
+        <script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navbar   = document.querySelector('.navbar');
+
+  navToggle.addEventListener('click', () => {
+    navbar.classList.toggle('open');
+    // Optionnel : animation de la croix
+    navToggle.classList.toggle('toggle');
+  });
+</script>
+
 </body>
 </html>
