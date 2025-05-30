@@ -546,6 +546,36 @@ path:nth-child(6) { transform-origin: 62% 52%; }
     display: flex;
   }
 }
+#scrollToTop {
+  position: fixed;
+  bottom: 2rem;           /* distance depuis le bas */
+  right: 40rem;            /* distance depuis la droite */
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--lgbt);
+  color: var(--blanc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#scrollToTop svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#scrollToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 
         footer {
@@ -779,6 +809,31 @@ buttons.forEach(button => {
   });
 </script>
 
+
+<!-- Bouton retour en haut -->
+<button id="scrollToTop" aria-label="Remonter en haut">
+  <!-- Icône flèche vers le haut (SVG) -->
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+<script>
+  const btnTop = document.getElementById('scrollToTop');
+
+  window.addEventListener('scroll', () => {
+    // si le bas de la fenêtre atteint (ou dépasse) le bas du document
+    if (window.innerHeight + window.pageYOffset >= document.body.scrollHeight) {
+      btnTop.classList.add('show');
+    } else {
+      btnTop.classList.remove('show');
+    }
+  });
+
+  btnTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 
 </body>
 </html>
