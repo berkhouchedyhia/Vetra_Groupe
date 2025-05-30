@@ -371,58 +371,56 @@ button:active {
   transform: perspective(170px) rotateX(36deg) translateY(5px);
 }
 
-/* Burger caché en desktop, visible en mobile */
+
+/* ————————————————————————
+   STYLE BURGER “CROIX”
+   ———————————————————————— */
+
+/* 1) Le bouton : cercle vierge, barres centrées */
 .nav-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  display: none;               /* n’apparaît que sur mobile */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
   background: transparent;
-  border: none;
+  border: 2px solid var(--main-color);
+  border-radius: 50%;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
 }
+
+/* 2) Les trois barres */
 .nav-toggle span {
   display: block;
-  width: 2rem;
-  height: 0.25rem;
+  width: 1.5rem;
+  height: 0.2rem;
   background: var(--main-color);
-  border-radius: 5px;
-  transition: all 0.3s;
+  margin: 0.25rem 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center center;
 }
 
-/* Réglages pour mobile */
-@media (max-width: 768px) {
-  /* on cache les liens par défaut */
-  .navbar a {
-    display: none;
-    width: 100%;
-    text-align: left;
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
-  }
-  /* on affiche le burger */
-  .nav-toggle {
-    display: flex;
-    position: absolute;
-    top: 1.2rem;
-    right: 2rem;
-  }
-  /* quand on ajoute .open sur .navbar, on montre les liens */
-  .navbar.open a {
-    display: block;
-  }
-}
-/* Animation du bouton quand actif */
+/* 3) Quand on a cliqué : on passe en croix */
 .nav-toggle.toggle span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(0.25rem) rotate(45deg);
 }
 .nav-toggle.toggle span:nth-child(2) {
   opacity: 0;
 }
 .nav-toggle.toggle span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: translateY(-0.25rem) rotate(-45deg);
+}
+
+/* 4) En mobile on l’affiche */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+  /* (reste de votre media-query pour .navbar a et .navbar.open a) */
 }
 
 
@@ -481,6 +479,72 @@ button:active {
   transition: opacity 0.3s ease;
 }
 
+/* ——— Burger animé “svg rotate” ——— */
+.container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  z-index: 10;
+}
+
+.container svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+path {
+  transition:
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dasharray 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Origines de transformation pour chaque barre */
+path:nth-child(1) { transform-origin: 36% 40%; }
+path:nth-child(2) { stroke-dasharray: 29 299; }
+path:nth-child(3) { transform-origin: 35% 63%; }
+path:nth-child(4) { stroke-dasharray: 29 299; }
+path:nth-child(5) { transform-origin: 61% 52%; }
+path:nth-child(6) { transform-origin: 62% 52%; }
+
+/* Quand on a la classe .active sur le container… */
+.container.active svg {
+  transform: rotate(90deg);
+}
+.container.active path:nth-child(1) {
+  transform: translate(9px,1px) rotate(45deg);
+}
+.container.active path:nth-child(2) {
+  stroke-dasharray: 225 299;
+  stroke-dashoffset: -72px;
+}
+.container.active path:nth-child(3) {
+  transform: translate(9px,1px) rotate(-45deg);
+}
+.container.active path:nth-child(4) {
+  stroke-dasharray: 225 299;
+  stroke-dashoffset: -72px;
+}
+.container.active path:nth-child(5) {
+  transform: translate(9px,1px) rotate(-45deg);
+}
+.container.active path:nth-child(6) {
+  transform: translate(9px,1px) rotate(45deg);
+}
+
+/* ——— Affichage en mobile seulement ——— */
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+  }
+}
 
 
         footer {
@@ -552,12 +616,18 @@ button:active {
   <a href="#method">Méthodologie</a>
   <a href="#contact">Contact</a>
 
-  <!-- BOUTON BURGER -->
-  <button class="nav-toggle" aria-label="Ouvrir le menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<div class="nav-toggle container" aria-label="Ouvrir le menu">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <g stroke-width="6.5" stroke-linecap="round">
+      <path d="M72 82.286h28.75" fill="#009100" fill-rule="evenodd" stroke="#fff"/>
+      <path d="M100.75 103.714l72.482-.143c.043 39.398-32.284 71.434-72.16 71.434-39.878 0-72.204-32.036-72.204-71.554" fill="none" stroke="#fff"/>
+      <path d="M72 125.143h28.75" fill="#009100" fill-rule="evenodd" stroke="#fff"/>
+      <path d="M100.75 103.714l-71.908-.143c.026-39.638 32.352-71.674 72.23-71.674 39.876 0 72.203 32.036 72.203 71.554" fill="none" stroke="#fff"/>
+      <path d="M100.75 82.286h28.75" fill="#009100" fill-rule="evenodd" stroke="#fff"/>
+      <path d="M100.75 125.143h28.75" fill="#009100" fill-rule="evenodd" stroke="#fff"/>
+    </g>
+  </svg>
+</div>
 </nav>
 
     
@@ -692,16 +762,16 @@ buttons.forEach(button => {
 });
 
   </script>
-        <script>
-  const navToggle = document.querySelector('.nav-toggle');
+<script>
+  const navToggle = document.querySelector('.nav-toggle.container');
   const navbar   = document.querySelector('.navbar');
 
-  navToggle.addEventListener('click', () => {
-    navbar.classList.toggle('open');
-    // Optionnel : animation de la croix
-    navToggle.classList.toggle('toggle');
+  navToggle.addEventListener('click', function() {
+    this.classList.toggle('active');   // anime le SVG
+    navbar.classList.toggle('open');   // ouvre/ferme les liens
   });
 </script>
+
 
 </body>
 </html>
