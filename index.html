@@ -558,7 +558,13 @@ path:nth-child(6) { transform-origin: 62% 52%; }
   .navbar {
     flex-direction: column;
     align-items: center;      /* centre les items */
-    padding: 1rem 0;          /* espace vertical moindre */
+    padding: 0.5rem;          /* espace vertical moindre */
+        min-height: 60px;
+            padding-top: env(safe-area-inset-top)  /* iOS notch */ 
+                 1rem                     /* padding bas */
+                 1rem 2rem;               /* padding latéral */
+    background-color: var(--bg-color);
+    min-height: calc(env(safe-area-inset-top) + 60px);
     position: fixed;          /* pour rester en haut */
     top: 0;
     left: 0;
