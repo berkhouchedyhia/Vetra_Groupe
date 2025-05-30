@@ -13,8 +13,8 @@
         }
 .logo-fixed {
     position: fixed;
-    top: 10px;
-    left: 10px;
+  top: 1rem;    /* au lieu de 10px */
+  left: 2rem;   /* au lieu de 10px */
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -40,8 +40,6 @@
     .logo-fixed {
         width: 50px;
         height: 50px;
-        top: 5px;
-        left: 5px;
     }
 }
 
@@ -414,7 +412,10 @@ button:active {
 .nav-toggle.toggle span:nth-child(3) {
   transform: translateY(-0.25rem) rotate(-45deg);
 }
-
+.nav-toggle.container {
+  top: 1rem;    /* déjà 1rem, à confirmer */
+  right: 2rem;  /* pour matcher le left du logo */
+}
 /* 4) En mobile on l’affiche */
 @media (max-width: 768px) {
   .nav-toggle {
